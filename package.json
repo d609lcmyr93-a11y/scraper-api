@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/d609lcmyr93-a11y/scraper-api/issues"
   },
-  "homepage": "https://github.com/d609lcmyr93-a11y/scraper-api#readme"
+  "homepage": "https://github.com/d609lcmyr93-a11y/scraper-api#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
