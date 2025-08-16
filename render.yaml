@@ -2,10 +2,16 @@ services:
   - type: web
     name: scraper-api
     env: node
+    plan: free  # または 'starter', 'standard' など Render のプランに応じて変更
+    region: oregon  # または 'frankfurt' など、Render のリージョンに応じて変更
     buildCommand: |
       npm install
       npx puppeteer browsers install chrome
     startCommand: node server.js
+    autoDeploy: true
+    branch: main
     envVars:
-      - key: PUPPETEER_CACHE_DIR
-        value: /opt/render/.cache/puppeteer
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
