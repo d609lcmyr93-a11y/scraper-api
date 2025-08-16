@@ -10,15 +10,20 @@ app.get('/scrape', async (req, res) => {
   if (!url) return res.status(400).json({ error: 'Missing url parameter' });
 
   try {
-    // Chrome のパスを自動取得
+    let executablePath;
     const chromeBasePath = '/opt/render/.cache/puppeteer/chrome';
-    const chromeDir = fs.readdirSync(chromeBasePath).find(name => name.startsWith('linux-'));
-    const executablePath = path.join(chromeBasePath, chromeDir, 'chrome');
+
+    if (fs.existsSync(chromeBasePath)) {
+      const chromeDir = fs.readdirSync(chromeBasePath).find(name => name.startsWith('linux-'));
+      if (chromeDir) {
+        executablePath = path.join(chromeBasePath, chromeDir, 'chrome');
+      }
+    }
 
     const browser = await puppeteer.launch({
       headless: 'new',
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      executablePath
+      executablePath // undefinedでも Puppeteer が fallback する
     });
 
     const page = await browser.newPage();
